@@ -10,5 +10,5 @@ function draw()
   background(181,116,222); 
   fill(124,185,9); 
   textSize(50); 
-  text("Hello World!", 100,250);
+  text("uuga bugga", 100,250);
 }
