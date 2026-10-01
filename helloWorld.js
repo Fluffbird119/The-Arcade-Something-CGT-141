@@ -6,10 +6,9 @@ function setup()
 
 // runs 60 times a second to update things on screen
 function draw()
-{ 
+{
   background(181,116,222); 
   fill(124,185,9); 
   textSize(50); 
   text("hello im jay", 100,250);
 }
- 
