@@ -10,6 +10,6 @@ function draw()
   background(181,116,222); 
   fill(124,185,9); 
   textSize(50); 
-  text("hello im jay", 100,250);
+  text("hello im jorge", 100,250);
 }
  
