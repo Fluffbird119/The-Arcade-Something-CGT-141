@@ -21,7 +21,8 @@ function draw()
   if (keyIsPressed == true && keyCode == 70) {
     fill(0);
     x = x + 1;
-  } else {
+  } 
+  else {
     fill(255);
 
   }
