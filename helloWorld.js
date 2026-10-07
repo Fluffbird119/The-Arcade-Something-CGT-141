@@ -1,3 +1,5 @@
+var x;
+
 // happens once on the project running
 function setup()
 { 
@@ -11,4 +13,7 @@ function draw()
   fill(124,185,9); 
   textSize(50); 
   text("hello im jay", 100,250);
+
+  fill("red");
+  ellipse(x, 50, 100, 100);
 }
