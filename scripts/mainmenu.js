@@ -31,4 +31,6 @@ function draw()
 
   }
   ellipse(x, y, 100, 100);
+
+  mouseXYPositions("black");
 }
