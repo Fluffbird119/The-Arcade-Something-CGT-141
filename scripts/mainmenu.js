@@ -1,10 +1,14 @@
+// these will be our standard canvas size for now might change later
+var canvasX = GetCanvasX();
+var canvasY = GetCanvasY();
+
 var x;
 var y;
 
 // happens once on the project running
 function setup()
 { 
-  createCanvas(842,734);
+  createCanvas(canvasX, canvasY); 
 
   x = 50;
   y = 50;
