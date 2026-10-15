@@ -36,8 +36,8 @@ function mouseXYPositions(colorName)
   noStroke();
   fill(colorName);
   textSize(20);
-  text("x value : " + mouseX, 50, 50);
-  text("y value : " + mouseY, 50, 80);
+  text("x value : " + mouseX, 75, 20);
+  text("y value : " + mouseY, 75, 50);
 }
 
 // call this function when the player clicks and you want to see if they clicked inside a box with position x, y and dimensions width and height

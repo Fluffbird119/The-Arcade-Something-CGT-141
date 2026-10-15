@@ -26,9 +26,11 @@ function setup()
 function draw()
 {
   background(181, 116, 222); 
-  fill(124, 185, 9); 
+  fill(124, 185, 9);
+
+  textAlign(CENTER, CENTER);
   textSize(50); 
-  text("The Arcade Something", 175, 275);
+  text("The Arcade Something", canvasX / 2, canvasY / 3);
 
   ButtonsAndText();
 
@@ -37,11 +39,15 @@ function draw()
 
 // the visuals for the buttons and text of the main menu
 function ButtonsAndText() {
+  textSize(12);
+
   // alternate between checking if mouse is in a box and then drawing box with new color if so
   if (MouseIsInsideBox(jayGameButtonX, jayGameButtonY, buttonWidth, buttonHeight)) {
     fill("orange");
   }
   rect(jayGameButtonX, jayGameButtonY, buttonWidth, buttonHeight);
+  fill("black");
+  text("jay game", jayGameButtonX + buttonWidth / 2, jayGameButtonY + buttonHeight / 2);
 
   // then reset color so only the box with mouse on it is different color
   fill(124, 185, 9); 
@@ -50,6 +56,8 @@ function ButtonsAndText() {
     fill("orange");
   }
   rect(devGameButtonX, devGameButtonY, buttonWidth, buttonHeight);
+  fill("black");
+  text("dev game", devGameButtonX + buttonWidth / 2, devGameButtonY + buttonHeight / 2);
 
   fill(124, 185, 9); 
 
@@ -57,6 +65,8 @@ function ButtonsAndText() {
     fill("orange");
   }
   rect(griffGameButtonX, griffGameButtonY, buttonWidth, buttonHeight);
+  fill("black");
+  text("griff game", griffGameButtonX + buttonWidth / 2, griffGameButtonY + buttonHeight / 2);
 
   fill(124, 185, 9); 
 
@@ -64,6 +74,8 @@ function ButtonsAndText() {
     fill("orange");
   }
   rect(jorgeGameButtonX, jorgeGameButtonY, buttonWidth, buttonHeight);
+  fill("black");
+  text("jorge game", jorgeGameButtonX + buttonWidth / 2, jorgeGameButtonY + buttonHeight / 2);
 
   fill(124, 185, 9); 
 
@@ -71,6 +83,8 @@ function ButtonsAndText() {
     fill("orange");
   }
   rect(sandyGameButtonX, sandyGameButtonY, buttonWidth, buttonHeight);
+  fill("black");
+  text("sandy game", sandyGameButtonX + buttonWidth / 2, sandyGameButtonY + buttonHeight / 2);
 }
 
 // this is an inbuilt function that fires whenever you press a key

@@ -9,7 +9,11 @@ function setup() {
 
 // runs 60 times a second to update things on screen
 function draw() {
-    if (keyIsPressed && keyCode == EscapeKeyCode) {
+    background("blue");
+}
+
+function keyPressed() {
+    if (keyCode == EscapeKeyCode) {
         ClosePage();
     }
 }
