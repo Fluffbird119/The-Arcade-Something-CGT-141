@@ -23,8 +23,7 @@ function draw()
   text("hello im jay", 100,250);
 
   if (keyIsPressed == true && keyCode == 70) {
-    fill(0);
-    x = x + 1;
+    window.open('jaysgame.html', '_blank');
   } 
   else {
     fill(255);
