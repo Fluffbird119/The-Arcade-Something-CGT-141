@@ -3,8 +3,8 @@
 
 
 // ALSO: I will put useful functions in here that can help with debugging / making the websiter so be sure to check back here
-var CanvasX = 842;
-var CanvasY = 734;
+var CanvasX = 850;
+var CanvasY = 750;
 
 var SpaceBarKeyCode = 32;
 var WKeyCode = 87;
@@ -37,8 +37,18 @@ function mouseXYPositions(colorName)
   noStroke();
   fill(colorName);
   textSize(20);
-  text("x value : "+mouseX, 50,50);
-  text("y value : "+mouseY, 50,80);
+  text("x value : " + mouseX, 50, 50);
+  text("y value : " + mouseY, 50, 80);
+}
+
+// call this function when the player clicks and you want to see if they clicked inside a box with position x, y and dimensions width and height
+function MouseIsInsideBox(x, y, width, height) {
+    if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 // helpful website for keycodes in javascript
