@@ -9,7 +9,7 @@ function setup() {
 
 // runs 60 times a second to update things on screen
 function draw() {
-    if (keyIsPressed && keyCode == 27) {
-        window.close();
+    if (keyIsPressed && keyCode == EscapeKeyCode) {
+        ClosePage();
     }
 }

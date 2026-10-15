@@ -6,12 +6,28 @@
 var CanvasX = 842;
 var CanvasY = 734;
 
+var SpaceBarKeyCode = 32;
+var WKeyCode = 87;
+var AKeyCode = 65;
+var SKeyCode = 83;
+var DKeyCode = 68;
+var EscapeKeyCode = 27;
+
 function GetCanvasX() {
     return CanvasX;
 }
 
 function GetCanvasY() {
     return CanvasY;
+}
+
+function OpenPage(pageName) {
+    window.open(pageName, "_self");
+}
+
+function ClosePage() {
+    //window.close();
+    history.back();
 }
 
 // call this and pass in the name of the color you want the text to be ex: "black" to see the position of your mouse position displayed on screen
