@@ -25,9 +25,8 @@ function draw()
   if (keyIsPressed == true && keyCode == 70) {
     window.open('jaysgame.html', '_blank');
   } 
-  else {
-    fill(255);
-
+  else if (keyIsPressed && keyCode == 27) {
+    window.close();
   }
   ellipse(x, y, 100, 100);
 

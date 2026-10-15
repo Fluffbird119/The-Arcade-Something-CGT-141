@@ -24,3 +24,6 @@ function mouseXYPositions(colorName)
   text("x value : "+mouseX, 50,50);
   text("y value : "+mouseY, 50,80);
 }
+
+// helpful website for keycodes in javascript
+// https://www.toptal.com/developers/keycode
