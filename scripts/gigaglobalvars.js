@@ -26,7 +26,6 @@ function OpenPage(pageName) {
 }
 
 function ClosePage() {
-    //window.close();
     history.back();
 }
 
