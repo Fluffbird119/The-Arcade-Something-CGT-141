@@ -39,7 +39,7 @@ function draw()
 
 // the visuals for the buttons and text of the main menu
 function ButtonsAndText() {
-  textSize(12);
+  textSize(24);
 
   // alternate between checking if mouse is in a box and then drawing box with new color if so
   if (MouseIsInsideBox(jayGameButtonX, jayGameButtonY, buttonWidth, buttonHeight)) {

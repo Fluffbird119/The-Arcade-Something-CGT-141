@@ -50,5 +50,25 @@ function MouseIsInsideBox(x, y, width, height) {
     }
 }
 
+// checks if two boxes overlap
+function ObjectInsideBox(objectX, objectY, objectWidth, objectHeight, boxX, boxY, boxWidth, boxHeight) {
+    if (objectX + objectWidth > boxX && objectX < boxX + boxWidth && objectY + objectHeight > boxY && objectY < boxY + boxHeight) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// draws non-scalene triangle with given x y base and height the x and y is where the lower left vertex should be
+function makeTriangle(x, y, base, height) {
+    triangle(x, y, x + base, y, (x + (base / 2)), y - height);
+}
+
+// checks if a box overlaps with a triangle
+function ObjectInsideTriangle(objectX, objectY, objectWidth, objectHeight, triX, triY, triWidth, triHeight) {
+    // ill make this eventually too hard for now
+}
+
 // helpful website for keycodes in javascript
 // https://www.toptal.com/developers/keycode
