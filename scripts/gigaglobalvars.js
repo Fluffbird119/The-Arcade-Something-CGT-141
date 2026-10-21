@@ -1,13 +1,74 @@
 // this script can be used to hold vars that every script will need / something that needs to be consistent between games like canvas size
 // this is so there is only one place that we have to edit these vars to affect every game
 
-var CanvasX = 842;
-var canvasY = 734;
+
+// ALSO: I will put useful functions in here that can help with debugging / making the websiter so be sure to check back here
+var CanvasX = 850;
+var CanvasY = 750;
+
+var SpaceBarKeyCode = 32;
+var WKeyCode = 87;
+var AKeyCode = 65;
+var SKeyCode = 83;
+var DKeyCode = 68;
+var EscapeKeyCode = 27;
 
 function GetCanvasX() {
-    return canvasX;
+    return CanvasX;
 }
 
 function GetCanvasY() {
-    return canvasY;
+    return CanvasY;
 }
+
+function OpenPage(pageName) {
+    window.open(pageName, "_self");
+}
+
+function ClosePage() {
+    history.back();
+}
+
+// call this and pass in the name of the color you want the text to be ex: "black" to see the position of your mouse position displayed on screen
+function mouseXYPositions(colorName)
+{
+  // text for x and y value
+  noStroke();
+  fill(colorName);
+  textSize(20);
+  text("x value : " + mouseX, 75, 20);
+  text("y value : " + mouseY, 75, 50);
+}
+
+// call this function when the player clicks and you want to see if they clicked inside a box with position x, y and dimensions width and height
+function MouseIsInsideBox(x, y, width, height) {
+    if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// checks if two boxes overlap
+function ObjectInsideBox(objectX, objectY, objectWidth, objectHeight, boxX, boxY, boxWidth, boxHeight) {
+    if (objectX + objectWidth > boxX && objectX < boxX + boxWidth && objectY + objectHeight > boxY && objectY < boxY + boxHeight) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// draws non-scalene triangle with given x y base and height the x and y is where the lower left vertex should be
+function makeTriangle(x, y, base, height) {
+    triangle(x, y, x + base, y, (x + (base / 2)), y - height);
+}
+
+// checks if a box overlaps with a triangle
+function ObjectInsideTriangle(objectX, objectY, objectWidth, objectHeight, triX, triY, triWidth, triHeight) {
+    // ill make this eventually too hard for now
+}
+
+// helpful website for keycodes in javascript
+// https://www.toptal.com/developers/keycode
