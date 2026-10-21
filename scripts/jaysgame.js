@@ -14,11 +14,14 @@ var tri3Y = 650;
 var playerX = 100;
 var playerY = 550;
 
-var gravityNum = 5; // how many pixles player is moved down each frame
-var playerJumpForce = 10; // howm many pixels player moves up each frame while jumping
+var gravityForce = 5; // how many pixles player is moved down each frame
+var gravityAcceleration = 1.1;
+var defaultGravityForce = 5;
+var playerJumpForce = 15; // howm many pixels player moves up each frame while jumping
 var playerJumping = false;
 var playerJumpTime = 20; // amount of frames player is jumping for, player will move jumpForce * playerJumpTime pixels
 var playerCurJumpTime = 0; // how long player has been jumping for
+var playerGrounded = true;
 
 // happens once on the project running
 function setup() {
@@ -42,10 +45,7 @@ function draw() {
 
     // player hitbox / temp player before model
 
-    if (playerY > 550) { // 550 is default playerY for now
-        playerY = 550;
-    }
-
+    // jumping code
     if (playerJumping == true) {
         if (playerCurJumpTime < playerJumpTime) {
             playerY -= playerJumpForce;
@@ -53,13 +53,28 @@ function draw() {
         }
         else {
             playerCurJumpTime = 0;
+            playerJumping = false;
         }
     }
-    else (playerJumping == false) {
-        playerY += gravityNum;
+    else if (playerGrounded == false) {
+        gravityForce *= gravityAcceleration;
+        playerY += gravityForce;
+        console.log("gravity force: " + gravityForce)
+    }
+    else {
+        gravityForce = defaultGravityForce;
+        playerY += gravityForce;
+    }
+
+    if (playerY > 550) { // 550 is default playerY for now
+        playerY = 550;
+    }
+
+    if (playerY >= 550) {
+        playerGrounded = true;
     }
     
-
+    // player object
     fill("red");
     rect(playerX, playerY, 50, 100);
 
@@ -67,7 +82,8 @@ function draw() {
 }
 
 function keyPressed() {
-    if (keyCode == SpaceBarKeyCode) {
+    if (keyCode == SpaceBarKeyCode && playerGrounded == true) {
+        playerGrounded = false;
         playerJumping = true;
     }
     else if (keyCode == EscapeKeyCode) {
