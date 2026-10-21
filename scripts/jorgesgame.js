@@ -5,7 +5,7 @@ var canvasY = GetCanvasY();
 // happens once on the project running
 function setup() {
     createCanvas(canvasX, canvasY);
-    background("blue");
+    background("red");
 }
 
 // runs 60 times a second to update things on screen
