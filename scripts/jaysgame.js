@@ -2,7 +2,7 @@
 var canvasX = GetCanvasX();
 var canvasY = GetCanvasY();
 
-var triOffset = 150;
+var triOffset = 200;
 
 var tri1X = 400;
 var tri1Y = 650;
@@ -14,8 +14,9 @@ var tri3Y = 650;
 var playerX = 100;
 var playerY = 550;
 
+var terminalVelocity = 100;
 var gravityForce = 5; // how many pixles player is moved down each frame
-var gravityAcceleration = 1.1;
+var gravityAcceleration = 1.2;
 var defaultGravityForce = 5;
 var playerJumpForce = 15; // howm many pixels player moves up each frame while jumping
 var playerJumping = false;
@@ -39,6 +40,7 @@ function draw() {
     // make spikes
     stroke("black");
 
+    // move triangles
     makeTriangle(tri1X, tri1Y, 60, 100);
     makeTriangle(tri2X, tri2Y, 60, 100);
     makeTriangle(tri3X, tri3Y, 60, 100);
@@ -58,6 +60,9 @@ function draw() {
     }
     else if (playerGrounded == false) {
         gravityForce *= gravityAcceleration;
+        if (gravityForce > terminalVelocity) {
+            gravityForce = terminalVelocity;
+        }
         playerY += gravityForce;
         console.log("gravity force: " + gravityForce)
     }
