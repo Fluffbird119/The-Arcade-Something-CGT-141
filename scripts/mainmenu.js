@@ -89,10 +89,7 @@ function ButtonsAndText() {
 
 // this is an inbuilt function that fires whenever you press a key
 function keyPressed() {
-  if (keyCode == SpaceBarKeyCode) {
-    OpenPage('jaysgame.html')
-  } 
-  else if (keyCode == EscapeKeyCode) {
+  if (keyCode == EscapeKeyCode) {
     ClosePage();
   }
 }

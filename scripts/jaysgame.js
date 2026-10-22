@@ -18,6 +18,8 @@ var playerCurJumpTime = 0; // how long player has been jumping for
 var playerGrounded = true;
 var playerLost = false;
 
+var playerScore = 0;
+
 var playerTutorial = true;
 
 var floorY = 550;
@@ -47,6 +49,17 @@ function setup() {
 
 // runs 60 times a second to update things on screen
 function draw() {
+    if (playerLost == true) {
+        fill("black");
+        textSize(50);
+        text("You lose", canvasX / 2, canvasY / 2);
+        textSize(20);
+        text("Press any button to exit", canvasX / 2, 50 + canvasY / 2);
+
+        // dont run the rest of the code if the player is dead
+        return;
+    }
+
     background(173, 216, 230);
     textAlign(CENTER, CENTER);
 
@@ -57,22 +70,23 @@ function draw() {
     // player object
     fill("red");
     stroke("black");
-    rect(playerX, playerY - playerHeight, playerWidth, playerHeight);
+    rect(playerX, playerY, playerWidth, playerHeight);
+
+    fill("black")
+    text("Score: " + playerScore, 50, 50);
 
     if (playerTutorial == true) {
-
-        // dont run the rest of the code if the player is in the tutorial
-        return;
-    }
-
-    if (playerLost == true) {
-        fill("black")
+        fill("black");
         textSize(50);
-        text("You lose", canvasX / 2, canvasY / 2);
+        text("Controls", canvasX / 2, ceilingY + 75);
         textSize(20);
-        text("Press any button to exit", canvasX / 2, 50 + canvasY / 2);
-
-        // dont run the rest of the code if the player is dead
+        text("Press spacebar to jump", canvasX / 2, ceilingY + 125);
+        text("Press escape to exit", canvasX / 2, ceilingY + 175);
+        text("Avoid the spikes and goodluck!", canvasX / 2, ceilingY + 225);
+        textSize(16);
+        text("Press any button to continue", canvasX / 2, ceilingY + 275);
+        
+        // dont run the rest of the code if the player is in the tutorial
         return;
     }
 
@@ -117,20 +131,27 @@ function draw() {
     if (playerY >= floorY - playerHeight) {
         playerGrounded = true;
     }
+}
 
-    mouseXYPositions("black");
+// called by the spike when its score gets set to 15
+function speedUpAllSpikes() {
+    for (var spike of spikeList) {
+        spike.increaseSpeed(1);
+    } 
 }
 
 function keyPressed() {
-    if (keyCode == SpaceBarKeyCode && playerGrounded == true) {
+    if (playerTutorial == true) {
+        playerTutorial = false;
+    }
+    else if (playerLost == true) {
+        ClosePage();
+    }
+    else if (keyCode == SpaceBarKeyCode && playerGrounded == true) {
         playerGrounded = false;
         playerJumping = true;
     }
     else if (keyCode == EscapeKeyCode) {
-        ClosePage();
-    }
-    else if (playerLost == true) {
-        console.log("thing");
         ClosePage();
     }
 }
@@ -138,5 +159,8 @@ function keyPressed() {
 function mousePressed() {
     if (playerLost == true) {
         ClosePage();
+    }
+    else if (playerTutorial == true) {
+        playerTutorial = false;
     }
 }

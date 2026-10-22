@@ -8,6 +8,8 @@ class Triangle {
 
         this.color = color(random(255),random(255),random(255));
         this.strokeColor = color(0, 0, 0);
+
+        this.hasScoredOn = false;
     }
 
     // functions that you call inside the class you have to define before you call them
@@ -27,6 +29,8 @@ class Triangle {
             this.y = ceilingY;
             this.height = random(-140, -160);
         }
+
+        this.hasScoredOn = false;
     }
 
     // function to call in main update loop to see if triangle is off bounds of the screen and then move and resize if so
@@ -34,6 +38,17 @@ class Triangle {
         // if triangle is offscreen to the left
         if (this.x + this.width < -spikeOffset) {
             this.repositionResizeTriangle();
+        }
+
+        if (this.x < playerX + playerWidth / 2) {
+            if (this.hasScoredOn == false) {
+                playerScore += 1;
+                this.hasScoredOn = true;
+
+                if (playerScore % 15 == 0) {
+                    speedUpAllSpikes();
+                }
+            }
         }
     }
 
@@ -109,8 +124,8 @@ class Triangle {
         this.height = newHeight;
     }
 
-    setSpeed(newSpeed) {
-        this.speed = newSpeed;
+    increaseSpeed(newSpeed) {
+        this.speed += newSpeed;
     }
 
     setColor(newColor) {
