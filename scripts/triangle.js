@@ -51,6 +51,13 @@ class Triangle {
         let hbHeight = this.height * shrinkAmount;
 
         // do box collison detection
+
+        if (playerX + playerWidth > hbX && playerX < hbX + hbWidth && playerY + playerHeight > hbY && playerY < hbY + hbHeight) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // works the same as update in your game files p5.js will call this every frame for each triangle instantiated

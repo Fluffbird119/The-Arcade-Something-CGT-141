@@ -11,7 +11,7 @@ var terminalVelocity = 20;
 var gravityForce = 5; // how many pixles player is moved down each frame
 var gravityAcceleration = 1.03;
 var defaultGravityForce = 5;
-var playerJumpForce = 25; // howm many pixels player moves up each frame while jumping
+var playerJumpForce = 23; // howm many pixels player moves up each frame while jumping
 var playerJumping = false;
 var playerJumpTime = 10; // amount of frames player is jumping for, player will move jumpForce * playerJumpTime pixels
 var playerCurJumpTime = 0; // how long player has been jumping for
@@ -52,13 +52,20 @@ function draw() {
     rect(0, floorY, canvasX, canvasY - floorY);
     rect(0, 0, canvasX, ceilingY);
 
+    if (playerLost == true) {
+        fill("black")
+        textSize(50);
+        text("You lose", canvasX / 2, canvasY / 2);
+        textSize(20);
+        text("Press any button to exit", canvasX / 2, 50 + canvasY / 2);
+    }
+
     // move spikes
     if (playerLost == false) {
         for (var spike of spikeList) {
             spike.update();
 
             if (spike.hittingPlayer()) {
-                text("You lose", canvasX / 2, canvasY / 2);
                 playerLost = true;
             }
         }
@@ -114,6 +121,7 @@ function keyPressed() {
         ClosePage();
     }
     else if (playerLost == true) {
+        console.log("thing");
         ClosePage();
     }
 }
