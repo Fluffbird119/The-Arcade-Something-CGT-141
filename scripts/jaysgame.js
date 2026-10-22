@@ -18,6 +18,8 @@ var playerCurJumpTime = 0; // how long player has been jumping for
 var playerGrounded = true;
 var playerLost = false;
 
+var playerTutorial = true;
+
 var floorY = 550;
 var ceilingY;
 
@@ -52,61 +54,68 @@ function draw() {
     rect(0, floorY, canvasX, canvasY - floorY);
     rect(0, 0, canvasX, ceilingY);
 
+    // player object
+    fill("red");
+    stroke("black");
+    rect(playerX, playerY - playerHeight, playerWidth, playerHeight);
+
+    if (playerTutorial == true) {
+
+        // dont run the rest of the code if the player is in the tutorial
+        return;
+    }
+
     if (playerLost == true) {
         fill("black")
         textSize(50);
         text("You lose", canvasX / 2, canvasY / 2);
         textSize(20);
         text("Press any button to exit", canvasX / 2, 50 + canvasY / 2);
+
+        // dont run the rest of the code if the player is dead
+        return;
     }
 
-    // move spikes
-    if (playerLost == false) {
-        for (var spike of spikeList) {
-            spike.update();
+    // move spikes only run all the game code when player hasnt lost and isnt in tutorial
+    for (var spike of spikeList) {
+        spike.update();
 
-            if (spike.hittingPlayer()) {
-                playerLost = true;
-            }
+        if (spike.hittingPlayer()) {
+            playerLost = true;
         }
+    }
 
-        // player hitbox / temp player before model
+    // player hitbox / temp player before model
 
-        // jumping code
-        if (playerJumping == true) {
-            if (playerCurJumpTime < playerJumpTime) {
-                playerY -= playerJumpForce;
-                playerCurJumpTime += 1;
-            }
-            else {
-                playerCurJumpTime = 0;
-                playerJumping = false;
-            }
-        }
-        else if (playerGrounded == false) {
-            gravityForce *= gravityAcceleration;
-            if (gravityForce > terminalVelocity) {
-                gravityForce = terminalVelocity;
-            }
-            playerY += gravityForce;
+    // jumping code
+    if (playerJumping == true) {
+        if (playerCurJumpTime < playerJumpTime) {
+            playerY -= playerJumpForce;
+            playerCurJumpTime += 1;
         }
         else {
-            gravityForce = defaultGravityForce;
-            playerY = floorY - playerHeight;
+            playerCurJumpTime = 0;
+            playerJumping = false;
         }
+    }
+    else if (playerGrounded == false) {
+        gravityForce *= gravityAcceleration;
+        if (gravityForce > terminalVelocity) {
+            gravityForce = terminalVelocity;
+        }
+        playerY += gravityForce;
+    }
+    else {
+        gravityForce = defaultGravityForce;
+        playerY = floorY - playerHeight;
+    }
 
-        if (playerY > floorY - playerHeight) {
-            playerY = floorY - playerHeight;
-        }
+    if (playerY > floorY - playerHeight) {
+        playerY = floorY - playerHeight;
+    }
 
-        if (playerY >= floorY - playerHeight) {
-            playerGrounded = true;
-        }
-        
-        // player object
-        fill("red");
-        stroke("black");
-        rect(playerX, playerY, playerWidth, playerHeight);
+    if (playerY >= floorY - playerHeight) {
+        playerGrounded = true;
     }
 
     mouseXYPositions("black");
