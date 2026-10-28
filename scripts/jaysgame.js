@@ -2,50 +2,106 @@
 var canvasX = GetCanvasX();
 var canvasY = GetCanvasY();
 
-var triOffset = 150;
-
-var tri1X = 400;
-var tri1Y = 650;
-var tri2X = tri1X + triOffset;
-var tri2Y = 650;
-var tri3X = tri2X + triOffset;
-var tri3Y = 650;
-
 var playerX = 100;
 var playerY = 550;
+var playerWidth = 50;
+var playerHeight = 100;
 
-var gravityNum = 5; // how many pixles player is moved down each frame
-var playerJumpForce = 10; // howm many pixels player moves up each frame while jumping
+var terminalVelocity = 20;
+var gravityForce = 5; // how many pixles player is moved down each frame
+var gravityAcceleration = 1.03;
+var defaultGravityForce = 5;
+var playerJumpForce = 23; // howm many pixels player moves up each frame while jumping
 var playerJumping = false;
-var playerJumpTime = 20; // amount of frames player is jumping for, player will move jumpForce * playerJumpTime pixels
+var playerJumpTime = 10; // amount of frames player is jumping for, player will move jumpForce * playerJumpTime pixels
 var playerCurJumpTime = 0; // how long player has been jumping for
+var playerGrounded = true;
+var playerLost = false;
+
+var playerScore = 0;
+
+var playerTutorial = true;
+
+var floorY = 550;
+var ceilingY;
+
+let spikeOffset = 400;
+var spikeList = [];
 
 // happens once on the project running
 function setup() {
     createCanvas(canvasX, canvasY);
+
+    ceilingY = floorY - 350; // since floor and ceiling are always 350 units apart now you can shift the play space with just one var change
+
+    // make spkies
+    let spikeY = floorY;
+    let spikeX = canvasX - spikeOffset;
+    let spikeWidth = 60;
+    let spikeHeight = 100;
+    let spikeSpeed = 5.5;
+
+    for (let i = 0; i < 3; i++) {
+        spikeX += spikeOffset;
+        spikeList[i] = new Triangle(spikeX, spikeY, spikeWidth, spikeHeight, spikeSpeed);
+    }
 }
 
 // runs 60 times a second to update things on screen
 function draw() {
+    if (playerLost == true) {
+        fill("black");
+        textSize(50);
+        text("You lose", canvasX / 2, canvasY / 2);
+        textSize(20);
+        text("Press any button to exit", canvasX / 2, 50 + canvasY / 2);
+
+        // dont run the rest of the code if the player is dead
+        return;
+    }
+
     background(173, 216, 230);
     textAlign(CENTER, CENTER);
 
     fill("grey");
-    rect(0, 650, canvasX, 100);
+    rect(0, floorY, canvasX, canvasY - floorY);
+    rect(0, 0, canvasX, ceilingY);
 
-    // make spikes
+    // player object
+    fill("red");
     stroke("black");
+    rect(playerX, playerY, playerWidth, playerHeight);
 
-    makeTriangle(tri1X, tri1Y, 60, 100);
-    makeTriangle(tri2X, tri2Y, 60, 100);
-    makeTriangle(tri3X, tri3Y, 60, 100);
+    fill("black")
+    text("Score: " + playerScore, 50, 50);
+
+    if (playerTutorial == true) {
+        fill("black");
+        textSize(50);
+        text("Controls", canvasX / 2, ceilingY + 75);
+        textSize(20);
+        text("Press spacebar to jump", canvasX / 2, ceilingY + 125);
+        text("Press escape to exit", canvasX / 2, ceilingY + 175);
+        text("Avoid the spikes and goodluck!", canvasX / 2, ceilingY + 225);
+        textSize(16);
+        text("Press any button to continue", canvasX / 2, ceilingY + 275);
+        
+        // dont run the rest of the code if the player is in the tutorial
+        return;
+    }
+
+    // move spikes only run all the game code when player hasnt lost and isnt in tutorial
+    for (var spike of spikeList) {
+        spike.update();
+
+        if (spike.hittingPlayer()) {
+            playerLost = true;
+        }
+    }
 
     // player hitbox / temp player before model
 
-    if (playerY > 550) { // 550 is default playerY for now
-        playerY = 550;
-    }
-
+    // jumping code
     if (playerJumping == true) {
         if (playerCurJumpTime < playerJumpTime) {
             playerY -= playerJumpForce;
@@ -53,24 +109,58 @@ function draw() {
         }
         else {
             playerCurJumpTime = 0;
+            playerJumping = false;
         }
     }
-    else (playerJumping == false) {
-        playerY += gravityNum;
+    else if (playerGrounded == false) {
+        gravityForce *= gravityAcceleration;
+        if (gravityForce > terminalVelocity) {
+            gravityForce = terminalVelocity;
+        }
+        playerY += gravityForce;
     }
-    
+    else {
+        gravityForce = defaultGravityForce;
+        playerY = floorY - playerHeight;
+    }
 
-    fill("red");
-    rect(playerX, playerY, 50, 100);
+    if (playerY > floorY - playerHeight) {
+        playerY = floorY - playerHeight;
+    }
 
-    mouseXYPositions("black");
+    if (playerY >= floorY - playerHeight) {
+        playerGrounded = true;
+    }
+}
+
+// called by the spike when its score gets set to 15
+function speedUpAllSpikes() {
+    for (var spike of spikeList) {
+        spike.increaseSpeed(1);
+    } 
 }
 
 function keyPressed() {
-    if (keyCode == SpaceBarKeyCode) {
+    if (playerTutorial == true) {
+        playerTutorial = false;
+    }
+    else if (playerLost == true) {
+        ClosePage();
+    }
+    else if (keyCode == SpaceBarKeyCode && playerGrounded == true) {
+        playerGrounded = false;
         playerJumping = true;
     }
     else if (keyCode == EscapeKeyCode) {
         ClosePage();
+    }
+}
+
+function mousePressed() {
+    if (playerLost == true) {
+        ClosePage();
+    }
+    else if (playerTutorial == true) {
+        playerTutorial = false;
     }
 }

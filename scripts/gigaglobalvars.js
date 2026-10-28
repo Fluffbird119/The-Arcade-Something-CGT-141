@@ -61,8 +61,8 @@ function ObjectInsideBox(objectX, objectY, objectWidth, objectHeight, boxX, boxY
 }
 
 // draws non-scalene triangle with given x y base and height the x and y is where the lower left vertex should be
-function makeTriangle(x, y, base, height) {
-    triangle(x, y, x + base, y, (x + (base / 2)), y - height);
+function makeTriangle(x, y, width, height) {
+    triangle(x, y, x + width, y, (x + (width / 2)), y - height);
 }
 
 // checks if a box overlaps with a triangle
