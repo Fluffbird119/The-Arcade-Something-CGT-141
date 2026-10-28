@@ -43,7 +43,7 @@ function setup() {
 
     for (let i = 0; i < 3; i++) {
         spikeX += spikeOffset;
-        spikeList[i] = new Triangle(spikeX, spikeY, spikeWidth, spikeHeight, spikeSpeed);
+        spikeList[i] = new Spike(spikeX, spikeY, spikeWidth, spikeHeight, spikeSpeed);
     }
 }
 

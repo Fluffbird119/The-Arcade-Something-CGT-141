@@ -1,4 +1,4 @@
-class Triangle {
+class Spike {
     constructor(x, y, w, h, s) {
         this.x = x;
         this.y = y;
