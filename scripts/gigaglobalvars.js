@@ -6,6 +6,8 @@
 var CanvasX = 850;
 var CanvasY = 750;
 
+var gameTick = 0;
+
 var SpaceBarKeyCode = 32;
 var WKeyCode = 87;
 var AKeyCode = 65;

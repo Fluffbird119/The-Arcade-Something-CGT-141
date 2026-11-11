@@ -25,7 +25,7 @@ var playerTutorial = true;
 var floorY = 550;
 var ceilingY;
 
-let spikeOffset = 400;
+var spikeOffset = 400;
 var spikeList = [];
 
 // happens once on the project running
@@ -49,6 +49,7 @@ function setup() {
 
 // runs 60 times a second to update things on screen
 function draw() {
+    
     if (playerLost == true) {
         fill("black");
         textSize(50);
