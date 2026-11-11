@@ -5,7 +5,12 @@ var canvasY = GetCanvasY();
 var eggX = canvasX/2;
 var eggY = canvasY/2;
 var eggWidth = 150;
-var eggHeight = 200;
+var eggHeight = 225;
+var buttonWidth = 125;
+var buttonHeight = 50;
+var buttonX = canvasX/2 - buttonWidth/2;
+var buttonY = canvasY-125 - buttonHeight/2;
+
 
 var score = 0;
 var scoreTextSize = 20;
@@ -32,6 +37,23 @@ function draw() {
     textSize(20);
     text("Score - " + score,canvasX/2,canvasY/7);
 
+    rect(buttonX,buttonY,buttonWidth,buttonHeight);
+    textSize(20);
+    text("Store",canvasX/2,canvasY=625);
+
     mouseXYPositions("black");
+}
+
+function mousePressed(){
+    if(MouseIsInsideBox(buttonX,buttonY,buttonWidth,buttonHeight)){
+        OpenPage("jorgestore.html");
+    }
+
+}
+
+function keyPressed(){
+    if(keyCode == EscapeKeyCode){
+        ClosePage();
+    }
 }
 //session storage
