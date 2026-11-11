@@ -5,7 +5,7 @@ var canvasY = GetCanvasY();
 var eggX = canvasX/2;
 var eggY = canvasY/2;
 var eggWidth = 150;
-var eggHeight = 225;
+var eggHeight = 200;
 var buttonWidth = 125;
 var buttonHeight = 50;
 var buttonX = canvasX/2 - buttonWidth/2;
@@ -47,6 +47,12 @@ function draw() {
 function mousePressed(){
     if(MouseIsInsideBox(buttonX,buttonY,buttonWidth,buttonHeight)){
         OpenPage("jorgestore.html");
+    }
+
+    if(dist(mouseX,mouseY,eggX,eggY) < 85)
+    {
+        score=score+1;
+        console.log("bug")
     }
 
 }
