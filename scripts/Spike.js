@@ -27,7 +27,7 @@ class Spike {
         // put spike on celing around 25% of the time
         if (random(1) > 0.75) {
             this.y = ceilingY;
-            this.height = random(-140, -160);
+            this.height = random(-240, -260);
         }
 
         this.hasScoredOn = false;

@@ -30,16 +30,18 @@ var spikeList = [];
 
 // happens once on the project running
 function setup() {
+    frameRate(30);
+
     createCanvas(canvasX, canvasY);
 
-    ceilingY = floorY - 350; // since floor and ceiling are always 350 units apart now you can shift the play space with just one var change
+    ceilingY = floorY - 450; // since floor and ceiling are always 450 units apart now you can shift the play space with just one var change
 
     // make spkies
     let spikeY = floorY;
     let spikeX = canvasX - spikeOffset;
     let spikeWidth = 60;
     let spikeHeight = 100;
-    let spikeSpeed = 5.5;
+    let spikeSpeed = 6;
 
     for (let i = 0; i < 3; i++) {
         spikeX += spikeOffset;
