@@ -63,7 +63,17 @@ class Spike {
         let hbX = this.x + (this.width - (this.width * shrinkAmount)) / 2;
         let hbY = this.y - (this.height * shrinkAmount);
         let hbWidth = this.width * shrinkAmount;
-        let hbHeight = this.height * shrinkAmount;
+        let hbHeight;
+
+        if (this.height < 0) {
+            hbHeight = -this.height * shrinkAmount;
+        }
+        else {
+            hbHeight = this.height * shrinkAmount;
+        }
+        
+       rect(playerX, playerY, playerWidth, playerHeight);
+       rect(hbX, hbY, hbWidth, hbHeight);
 
         // do box collison detection
 

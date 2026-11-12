@@ -2,10 +2,13 @@
 var canvasX = GetCanvasX();
 var canvasY = GetCanvasY();
 
-var playerX = 100;
-var playerY = 550;
+var floorY = 550;
+var ceilingY;
+
 var playerWidth = 50;
 var playerHeight = 100;
+var playerX = 100;
+var playerY = floorY - playerHeight;
 
 var terminalVelocity = 20;
 var gravityForce = 5; // how many pixles player is moved down each frame
@@ -22,11 +25,18 @@ var playerScore = 0;
 
 var playerTutorial = true;
 
-var floorY = 550;
-var ceilingY;
 
 var spikeOffset = 400;
 var spikeList = [];
+
+// animation shit
+let player_sprite_sheet;
+
+// a special p5.js function for doing image stuff
+function preload() {
+  player_sprite_sheet = loadImage("../images/jaysimages/player_sprite_sheet.png");
+}
+
 
 // happens once on the project running
 function setup() {
@@ -47,33 +57,41 @@ function setup() {
         spikeX += spikeOffset;
         spikeList[i] = new Spike(spikeX, spikeY, spikeWidth, spikeHeight, spikeSpeed);
     }
+
+    textAlign(CENTER, CENTER);
+
+    newAnim = new continuosAnimation(player_sprite_sheet, 5, 0.25, 8, 30); // yay i love magic numbers so much
 }
 
 // runs 60 times a second to update things on screen
 function draw() {
     
     if (playerLost == true) {
+        fill("grey");
+        rect(canvasX/2 - 125, canvasY/2 - 30, 250, 100);
+
         fill("black");
         textSize(50);
         text("You lose", canvasX / 2, canvasY / 2);
         textSize(20);
         text("Press any button to exit", canvasX / 2, 50 + canvasY / 2);
-
+ 
         // dont run the rest of the code if the player is dead
         return;
     }
 
     background(173, 216, 230);
-    textAlign(CENTER, CENTER);
+    
 
     fill("grey");
     rect(0, floorY, canvasX, canvasY - floorY);
     rect(0, 0, canvasX, ceilingY);
 
     // player object
+    newAnim.update(playerX - playerWidth/1.15, playerY - 45);
     fill("red");
     stroke("black");
-    rect(playerX, playerY, playerWidth, playerHeight);
+    //rect(playerX, playerY, playerWidth, playerHeight);
 
     fill("black")
     text("Score: " + playerScore, 50, 50);

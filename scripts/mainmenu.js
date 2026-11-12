@@ -20,8 +20,6 @@ var sandyGameButtonY = (canvasY * 23) / 30;
 function setup()
 { 
   createCanvas(canvasX, canvasY); 
-
-  newAnim = new continuosAnimation([1,2,3], 1);
 }
 
 // runs 60 times a second to update things on screen
@@ -37,8 +35,6 @@ function draw()
   ButtonsAndText();
 
   mouseXYPositions("black");
-
-  newAnim.update();
 }
 
 // the visuals for the buttons and text of the main menu
