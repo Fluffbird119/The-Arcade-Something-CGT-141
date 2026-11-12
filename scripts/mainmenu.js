@@ -21,7 +21,7 @@ function setup()
 { 
   createCanvas(canvasX, canvasY); 
 
-  newAnim = new oneShotAnimation([1,2,3], 1);
+  newAnim = new continuosAnimation([1,2,3], 1);
 }
 
 // runs 60 times a second to update things on screen
