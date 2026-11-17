@@ -25,7 +25,7 @@ class Spike {
         this.height = random(100, 130);
 
         // put spike on celing around 25% of the time
-        if (random(1) > 0.75) {
+        if (random(1) > 0) {
             this.y = ceilingY;
             this.height = random(-240, -260);
         }
@@ -71,9 +71,10 @@ class Spike {
         else {
             hbHeight = this.height * shrinkAmount;
         }
-        
-       rect(playerX, playerY, playerWidth, playerHeight);
-       rect(hbX, hbY, hbWidth, hbHeight);
+    
+        //fill("white");
+        //rect(playerX, playerY, playerWidth, playerHeight);
+        //rect(hbX, hbY, hbWidth, hbHeight);
 
         // do box collison detection
 
