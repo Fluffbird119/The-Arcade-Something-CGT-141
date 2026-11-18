@@ -46,7 +46,7 @@ function draw() {
 
 function mousePressed(){
     if(MouseIsInsideBox(buttonX,buttonY,buttonWidth,buttonHeight)){
-        OpenPage("jorgestore.html");
+        OpenPage("jorgestore.html?score="+score);
     }
 
     if(dist(mouseX,mouseY,eggX,eggY) < 85)
@@ -63,3 +63,9 @@ function keyPressed(){
     }
 }
 //session storage
+
+// Source - https://stackoverflow.com/a/3724171
+// Posted by cubic1271, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-11-18, License - CC BY-SA 3.0
+
+
