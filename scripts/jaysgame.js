@@ -29,14 +29,16 @@ var playerTutorial = true;
 var spikeOffset = 400;
 var spikeList = [];
 
+let backgroundImage;
+
 // animation shit
 let player_sprite_sheet;
 
 // a special p5.js function for doing image stuff
 function preload() {
   player_sprite_sheet = loadImage("../images/jaysimages/player_sprite_sheet.png");
+  backgroundImage = loadImage("../images/jaysimages/jaysgamebackground.png");
 }
-
 
 // happens once on the project running
 function setup() {
@@ -45,6 +47,9 @@ function setup() {
     createCanvas(canvasX, canvasY);
 
     ceilingY = floorY - 450; // since floor and ceiling are always 450 units apart now you can shift the play space with just one var change
+
+    // set up background image to cover visible space
+    //backgroundImage.resize(canvasX, 450);
 
     // make spkies
     let spikeY = floorY;
@@ -80,8 +85,8 @@ function draw() {
         return;
     }
 
-    background(173, 216, 230);
-    
+    background("white");
+    image(backgroundImage, 0, ceilingY);
 
     fill("grey");
     rect(0, floorY, canvasX, canvasY - floorY);
@@ -95,6 +100,8 @@ function draw() {
 
     fill("black")
     text("Score: " + playerScore, 50, 50);
+
+    mouseXYPositions("black");
 
     if (playerTutorial == true) {
         fill("black");
