@@ -25,11 +25,17 @@ var playerScore = 0;
 
 var playerTutorial = true;
 
-
 var spikeOffset = 400;
 var spikeList = [];
 
 let backgroundImage;
+
+var backgroundX = 0;
+var backgroundImageSpeed = 0;
+
+var floorAndCeilingX1 = 0;
+var floorAndCeilingX2 = 0;
+var floorImageSpeed = 0;
 
 // animation shit
 let player_sprite_sheet;
@@ -37,7 +43,9 @@ let player_sprite_sheet;
 // a special p5.js function for doing image stuff
 function preload() {
   player_sprite_sheet = loadImage("../images/jaysimages/player_sprite_sheet.png");
-  backgroundImage = loadImage("../images/jaysimages/jaysgamebackground.png");
+  backgroundImage = loadImage("../images/jaysimages/jay_background.png");
+  blockImage = loadImage("../images/jaysimages/block.png");
+  otherBlockImage = loadImage("../images/jaysimages/block_with_holes.png");
 }
 
 // happens once on the project running
@@ -48,15 +56,14 @@ function setup() {
 
     ceilingY = floorY - 450; // since floor and ceiling are always 450 units apart now you can shift the play space with just one var change
 
-    // set up background image to cover visible space
-    //backgroundImage.resize(canvasX, 450);
-
     // make spkies
     let spikeY = floorY;
     let spikeX = canvasX - spikeOffset;
     let spikeWidth = 60;
     let spikeHeight = 100;
     let spikeSpeed = 6;
+    backgroundImageSpeed = spikeSpeed - 2; // minus 2 because background should be a lil slower than foreground
+    floorImageSpeed = spikeSpeed;
 
     for (let i = 0; i < 3; i++) {
         spikeX += spikeOffset;
@@ -66,16 +73,65 @@ function setup() {
     textAlign(CENTER, CENTER);
 
     newAnim = new continuosAnimation(player_sprite_sheet, 5, 0.25, 8, 30); // yay i love magic numbers so much
+
+
+    // all of these need 2 so that the background gets looped properly kinda bad but who cares
+    // big combined background image
+    combinedBackground = createGraphics(backgroundImage.width * 4, backgroundImage.height);
+    combinedBackground2 = createGraphics(backgroundImage.width * 4, backgroundImage.height);
+
+    // make it filled with 4 smaller images
+    for (let i = 0; i < 4; i++) {
+        combinedBackground.image(backgroundImage, backgroundImage.width * i, 0);
+        combinedBackground2.image(backgroundImage, backgroundImage.width * i, 0);
+    }
+
+    // combinded blocks for floor / ceiling
+    blockImage.resize(200, 200);
+    otherBlockImage.resize(200, 200);
+
+    floorCombinedBlock = createGraphics(blockImage.width * 5, blockImage.height);
+    floorCombinedBlock2 = createGraphics(blockImage.width * 5, blockImage.height);
+
+    for (let i = 0; i < 5; i++) {
+        // add a random chance to use other block image which is same size so that floor and ceiling are procedural
+        if (random(1) > 0.5) {
+            floorCombinedBlock.image(blockImage, blockImage.width * i, 0);
+            floorCombinedBlock2.image(otherBlockImage, blockImage.width * i, 0);
+        }
+        else {
+            floorCombinedBlock.image(otherBlockImage, blockImage.width * i, 0);
+            floorCombinedBlock2.image(blockImage, blockImage.width * i, 0);
+        }
+    }
+
+    // generated roof and floor differently so theyll be different each time
+    roofCombinedBlock = createGraphics(blockImage.width * 5, blockImage.height);
+    roofCombinedBlock2 = createGraphics(blockImage.width * 5, blockImage.height);
+
+    for (let i = 0; i < 5; i++) {
+        // add a random chance to use other block image which is same size so that floor and ceiling are procedural
+        if (random(1) > 0.5) {
+            roofCombinedBlock.image(blockImage, blockImage.width * i, 0);
+            roofCombinedBlock2.image(otherBlockImage, blockImage.width * i, 0);
+        }
+        else {
+            roofCombinedBlock.image(otherBlockImage, blockImage.width * i, 0);
+            roofCombinedBlock2.image(blockImage, blockImage.width * i, 0);
+        }
+    }
+
+    floorAndCeilingX1 = 0;
+    floorAndCeilingX2 = floorCombinedBlock.width;
 }
 
 // runs 60 times a second to update things on screen
 function draw() {
     
     if (playerLost == true) {
-        fill("grey");
-        rect(canvasX/2 - 125, canvasY/2 - 30, 250, 100);
-
-        fill("black");
+        stroke("black");
+        strokeWeight(5);
+        fill("white");
         textSize(50);
         text("You lose", canvasX / 2, canvasY / 2);
         textSize(20);
@@ -84,13 +140,17 @@ function draw() {
         // dont run the rest of the code if the player is dead
         return;
     }
+    strokeWeight(1);
 
-    background("white");
-    image(backgroundImage, 0, ceilingY);
+    // background and floor and ceiling images
+    image(combinedBackground, backgroundX, ceilingY);
+    image(combinedBackground2, backgroundX + combinedBackground.width, ceilingY);
+    
+    image(floorCombinedBlock, floorAndCeilingX1, floorY);
+    image(floorCombinedBlock2, floorAndCeilingX2, floorY);
 
-    fill("grey");
-    rect(0, floorY, canvasX, canvasY - floorY);
-    rect(0, 0, canvasX, ceilingY);
+    image(roofCombinedBlock, floorAndCeilingX1, -100);
+    image(roofCombinedBlock2, floorAndCeilingX2, -100);
 
     // player object
     newAnim.update(playerX - playerWidth/1.15, playerY - 45);
@@ -98,13 +158,19 @@ function draw() {
     stroke("black");
     //rect(playerX, playerY, playerWidth, playerHeight);
 
-    fill("black")
-    text("Score: " + playerScore, 50, 50);
+    stroke("black");
+    strokeWeight(5);
+    fill("white");
+    textSize(30);
+    text("Score: " + playerScore, 75, 50);
+    strokeWeight(1);
 
-    mouseXYPositions("black");
+    //mouseXYPositions("black");
 
     if (playerTutorial == true) {
-        fill("black");
+        stroke("black");
+        strokeWeight(5);
+        fill("white");
         textSize(50);
         text("Controls", canvasX / 2, ceilingY + 75);
         textSize(20);
@@ -117,6 +183,7 @@ function draw() {
         // dont run the rest of the code if the player is in the tutorial
         return;
     }
+    strokeWeight(1);
 
     // move spikes only run all the game code when player hasnt lost and isnt in tutorial
     for (var spike of spikeList) {
@@ -124,6 +191,61 @@ function draw() {
 
         if (spike.hittingPlayer()) {
             playerLost = true;
+        }
+    }
+
+    // move background image and floor image
+    backgroundX -= backgroundImageSpeed;
+    if (backgroundX <= -combinedBackground.width) {
+        backgroundX = 0;
+    }
+
+    floorAndCeilingX1 -= floorImageSpeed;
+    floorAndCeilingX2 -= floorImageSpeed
+    if (floorAndCeilingX1 <= -floorCombinedBlock2.width) {
+        floorAndCeilingX1 = floorAndCeilingX2 + floorCombinedBlock2.width;
+
+        for (let i = 0; i < 5; i++) {
+            // add a random chance to use other block image which is same size so that floor and ceiling are procedural
+            if (random(1) > 0.5) {
+                floorCombinedBlock.image(blockImage, blockImage.width * i, 0);
+            }
+            else {
+                floorCombinedBlock.image(otherBlockImage, blockImage.width * i, 0);
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            // add a random chance to use other block image which is same size so that floor and ceiling are procedural
+            if (random(1) > 0.5) {
+                roofCombinedBlock.image(blockImage, blockImage.width * i, 0);
+            }
+            else {
+                roofCombinedBlock.image(otherBlockImage, blockImage.width * i, 0);
+            }
+        }
+    }
+    if (floorAndCeilingX2 <= -floorCombinedBlock2.width) {
+        floorAndCeilingX2 = floorAndCeilingX1 + floorCombinedBlock.width;
+
+        for (let i = 0; i < 5; i++) {
+            // add a random chance to use other block image which is same size so that floor and ceiling are procedural
+            if (random(1) > 0.5) {
+                floorCombinedBlock2.image(blockImage, blockImage.width * i, 0);
+            }
+            else {
+                floorCombinedBlock2.image(otherBlockImage, blockImage.width * i, 0);
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            // add a random chance to use other block image which is same size so that floor and ceiling are procedural
+            if (random(1) > 0.5) {
+                roofCombinedBlock2.image(blockImage, blockImage.width * i, 0);
+            }
+            else {
+                roofCombinedBlock2.image(otherBlockImage, blockImage.width * i, 0);
+            }
         }
     }
 
@@ -165,7 +287,10 @@ function draw() {
 function speedUpAllSpikes() {
     for (var spike of spikeList) {
         spike.increaseSpeed(1);
-    } 
+    }
+
+    backgroundImageSpeed += 1;
+    floorImageSpeed += 1;
 }
 
 function keyPressed() {
