@@ -31,7 +31,7 @@ var levels = [
 
 var level = 1;
 var quota = 500;
-var timeLeft = 60;
+var timeLeft = 4;
 var gameState = "menu";
 
 var money = 0;
@@ -555,4 +555,7 @@ function drawOverlay() {
     textSize(26);
     textStyle(BOLD);
     text(label, canvasX / 2, buttonY + buttonH / 2);
+
+    fill(255);
+    text("Press escape to exit", buttonX + buttonW / 2, buttonY + buttonH + 35);
 }
