@@ -34,7 +34,7 @@ function draw()
 
   ButtonsAndText();
 
-  mouseXYPositions("black");
+  // mouseXYPositions("black");
 }
 
 // the visuals for the buttons and text of the main menu
