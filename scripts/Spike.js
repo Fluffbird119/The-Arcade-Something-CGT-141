@@ -6,10 +6,10 @@ class Spike {
         this.height = h;
         this.speed = s;
 
-        this.colorRgb = random(255);
+        this.colorRgb = random(120, 200);
         this.color = color(this.colorRgb, this.colorRgb, this.colorRgb);
 
-        this.strokeColorRgb = 255 - this.colorRgb;
+        this.strokeColorRgb = 0;
         this.strokeColor = color(this.strokeColorRgb, this.strokeColorRgb, this.strokeColorRgb);
 
         this.hasScoredOn = false;
@@ -17,10 +17,10 @@ class Spike {
 
     // functions that you call inside the class you have to define before you call them
     repositionResizeTriangle() {
-        this.colorRgb = random(255);
+        this.colorRgb = random(120, 200);
         this.color = color(this.colorRgb, this.colorRgb, this.colorRgb);
 
-        this.strokeColorRgb = 255 - this.colorRgb;
+        this.strokeColorRgb = 0;
         this.strokeColor = color(this.strokeColorRgb, this.strokeColorRgb, this.strokeColorRgb);
 
         this.x = GetCanvasX();
