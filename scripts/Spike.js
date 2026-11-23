@@ -8,7 +8,9 @@ class Spike {
 
         this.colorRgb = random(255);
         this.color = color(this.colorRgb, this.colorRgb, this.colorRgb);
-        this.strokeColor = color(0, 0, 0);
+
+        this.strokeColorRgb = 255 - this.colorRgb;
+        this.strokeColor = color(this.strokeColorRgb, this.strokeColorRgb, this.strokeColorRgb);
 
         this.hasScoredOn = false;
     }
@@ -17,6 +19,10 @@ class Spike {
     repositionResizeTriangle() {
         this.colorRgb = random(255);
         this.color = color(this.colorRgb, this.colorRgb, this.colorRgb);
+
+        this.strokeColorRgb = 255 - this.colorRgb;
+        this.strokeColor = color(this.strokeColorRgb, this.strokeColorRgb, this.strokeColorRgb);
+
         this.x = GetCanvasX();
         this.y = floorY;
 
@@ -27,7 +33,7 @@ class Spike {
         this.height = random(100, 130);
 
         // put spike on celing around 25% of the time
-        if (random(1) > 0) {
+        if (random(1) > .75) {
             this.y = ceilingY;
             this.height = random(-240, -260);
         }
@@ -93,6 +99,7 @@ class Spike {
     {
         fill(this.color);
         stroke(this.strokeColor);
+        strokeWeight(2);
 
         this.moveTriangle();
         this.checkTrianglePosition();

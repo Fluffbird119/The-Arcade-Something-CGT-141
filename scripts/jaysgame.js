@@ -11,12 +11,12 @@ var playerX = 100;
 var playerY = floorY - playerHeight;
 
 var terminalVelocity = 20;
-var gravityForce = 5; // how many pixles player is moved down each frame
-var gravityAcceleration = 1.03;
+var gravityForce = 2; // how many pixles player is moved down each frame
+var gravityAcceleration = 0.50;
 var defaultGravityForce = 5;
-var playerJumpForce = 23; // howm many pixels player moves up each frame while jumping
+var playerJumpForce = 25; // howm many pixels player moves up each frame while jumping
 var playerJumping = false;
-var playerJumpTime = 11; // amount of frames player is jumping for, player will move jumpForce * playerJumpTime pixels
+var playerJumpTime = 10; // amount of frames player is jumping for, player will move jumpForce * playerJumpTime pixels
 var playerCurJumpTime = 0; // how long player has been jumping for
 var playerGrounded = true;
 var playerLost = false;
@@ -263,10 +263,12 @@ function draw() {
         }
     }
     else if (playerGrounded == false) {
-        gravityForce *= gravityAcceleration;
+        gravityForce += gravityAcceleration;
+
+        /*
         if (gravityForce > terminalVelocity) {
             gravityForce = terminalVelocity;
-        }
+        }*/
         playerY += gravityForce;
     }
     else {
